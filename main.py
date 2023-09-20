@@ -1,21 +1,28 @@
+from tkinter import HORIZONTAL
 import PySimpleGUI as sg
-from  classes.py import Gains as rep
 
-layout = [  [sg.Text("Log your fruit.")],
+#from  classes.py import Gains as rep
+#from  classes.py import Jamm as jam
+
+#Layout for main menu 
+layoutMain = [  sg.Text("Log or read here:"),
+                sg.Button("")]
+
+#Layout for input section
+layoutInput = [  [sg.Text("Log your fruit.")],
             [sg.Text("Spiecies: "), sg.InputText()],
-            [sg.Text("The age: "), sg.InputText()],
-            [sg.Text("The sex: "), sg.InputText()],
-            [sg.Button("Confirm"), sg.Button("Cancel")] ]
+            [sg.Text("Amount: "), sg.Slider(range = (1,256), orientation = 'h'), sg.Text("kg")],
+            [sg.Text("Is it a fruit or vegetable?: "), sg.Radio("Fruit", group_id="fruit"), sg.Radio("Vegetable", group_id="fruit")],
+            [sg.Button("Add"), sg.Button("Done")] ]
 
-log = True
+#layout for Output section
+layoutOutput = []
 
-# Create the Window
-window = sg.Window('Human creator', layout)
-# Event Loop to process "events" and get the "values" of the inputs
+window = sg.Window('Gain reporter', layoutMain)
+
 while True:
     event, values = window.read()
-    if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
-        log = False
+    if event == sg.WIN_CLOSED or event == 'Done': #If the window is closed or the user is done it closes the window
         break
 
 window.close()
