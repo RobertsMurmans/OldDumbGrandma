@@ -25,6 +25,7 @@ while True:
             break
 
     if event == 'Add stock':
+        window.close()
         window = sg.Window('Gain reporter', layoutInput)
 
 window.close()
