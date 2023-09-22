@@ -5,10 +5,13 @@ class Gains:
     def __init__(self, species, amount, fruit):
         self.species = species  #defines the spiecies of the grown Gain
         self.amount = amount    #defines the amount of the grown Gain
-        self.fruit = fruit      #defines wether the grown Gain is a frouit or vegetable
+        if fruit == True:
+            self.fruit = "fruit"      #defines wether the grown Gain is a frouit or vegetable
+            return
+        self.fruit = "vegetable"
     
     def info(self):
-        print(self.species, self.amount + " kg", self.fruit, sep="; ")
+        print(self.species, self.amount, self.fruit, sep="; ")
 
     def add(self, amount):      #Add amount to already existing stock
         self.amout = self.amount + amount
@@ -32,8 +35,8 @@ class Jamm(Gains):
 
 
 
-Apple = Gains("Apple", 12, "fruit")
-Apple.info()
-AppleJ = Apple.jamify(4)
-Apple.info()
-AppleJ.info()
+#Apple = Gains("Apple", 12, "fruit")
+#Apple.info()
+#AppleJ = Apple.jamify(4)
+#Apple.info()
+#AppleJ.info()
