@@ -5,7 +5,7 @@ from  classes import Jamm as jamm
 
 #Layout for main menu 
 layoutMain = [  [sg.Text("Log or read here:")],
-                [sg.Button("Add stock"), sg.Button("View inventory")],
+                [sg.Button("Add stock"), sg.Button("View inventory"), sg.Button("All")],
                 [sg.Button("Done")]]
 
 #Layout for input section
@@ -16,11 +16,13 @@ layoutInput = [ [sg.Text("Log your fruit.")],
                 [sg.Button("Add"), sg.Button("Back")] ]
 
 #Layout for output section
-layoutOutput = [[sg.Output(key="output"),
-                sg.Button("Back")]]
+layoutOutput = [[sg.Listbox(values=[],key="output", size=(40,20)),
+                sg.Button("Clear"), sg.Button("Back.")]]
 
 #Combine all the layouts into one, so it can be displayed in one window
-layout = [[     sg.Column(layoutMain, key="Main"), sg.Column(layoutInput, visible=False, key="Input"), sg.Column(layoutOutput, visible=False, key="Output")]]
+layout = [[sg.Column(layoutMain, key="Main"), sg.Column(layoutInput, visible=False, key="Input"), sg.Column(layoutOutput, visible=False, key="Output")]]
+
+Stack=[]
 
 window = sg.Window('Gain reporter', layout)
 while True:
@@ -35,14 +37,34 @@ while True:
         if event == "View inventory":                   #changes window to show output
                 window[f'Output'].update(visible=True)
                 window[f'Main'].update(visible=False)
+
+        if event == "All":                   #changes window to show output
+                window[f'Input'].update(visible=True)
+                window[f'Output'].update(visible=True)
+                window[f'Main'].update(visible=False)
+
+        if event == "Clear":
+                selected_items = values["output"]
+                if selected_items:
+                        for item in selected_items:
+                                Stack.remove(item)
+                window["output"].update(values=Stack)
                 
         if event == "Back":                             #changes window to show main menu
-                window[f'Output'].update(visible=False)
                 window[f'Input'].update(visible=False)
+                window[f'Main'].update(visible=True)
+        if event == "Back.":                             #changes window to show main menu
+                window[f'Output'].update(visible=False)
                 window[f'Main'].update(visible=True)
         
         if event == "Add":                              #Adds the input to the output screen
-                window["output"].update(rep(values[0], values[1], values[2]))
+                item = rep(values[0], values[1], values[2])
+                if item:
+                        Stack.append(item)
+                        stack=[]
+                        for i in range(len(Stack)):
+                                stack.append(Stack[i].val)
+                        window["output"].update(values=stack)
 
           
 

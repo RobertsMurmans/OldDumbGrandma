@@ -24,6 +24,9 @@ class Gains:
         print("Made ", amount, " kg of jam")
         return Jamm(self.species+" jam", amount)
     
+    def val(self):
+        return str(self.species) + " " + str(self.amount) + "kg " + str(self.fruit)
+    
 class Jamm(Gains):
     def __init__(self, species, amount):
         super().__init__(species, amount, "jam")
