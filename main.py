@@ -38,18 +38,28 @@ while True:
                 window[f'Output'].update(visible=True)
                 window[f'Main'].update(visible=False)
 
-        if event == "All":                   #changes window to show output
+        if event == "All":                              #changes window to show all(debug)
                 window[f'Input'].update(visible=True)
                 window[f'Output'].update(visible=True)
                 window[f'Main'].update(visible=False)
 
         if event == "Clear":
-                selected_items = values["output"]
-                if selected_items:
-                        for item in selected_items:
-                                Stack.remove(item)
-                window["output"].update(values=Stack)
+                selected_item = values["output"]
+                stack2=stack
+                stack=[]
+                stack.append(selected_item)
+                for i in range(len(stack2)):
+                        if selected_item == stack2[i]:
+                                stack.append(stack2[i])
+                                Stack.remove[i]
+                for i in range(len(Stack)):
+                        stack.append(Stack[i].val())
+                window["output"].update(values=stack)
                 
+        if event == "Jam":
+                selected_items = values["output"]
+
+
         if event == "Back":                             #changes window to show main menu
                 window[f'Input'].update(visible=False)
                 window[f'Main'].update(visible=True)
@@ -58,13 +68,11 @@ while True:
                 window[f'Main'].update(visible=True)
         
         if event == "Add":                              #Adds the input to the output screen
-                item = rep(values[0], values[1], values[2])
-                if item:
-                        Stack.append(item)
-                        stack=[]
-                        for i in range(len(Stack)):
-                                stack.append(Stack[i].val)
-                        window["output"].update(values=stack)
+                Stack.append(rep(values[0], values[1], values[2]))
+                stack=[]
+                for i in range(len(Stack)):
+                        stack.append(Stack[i].val())
+                window["output"].update(values=stack)
 
           
 
