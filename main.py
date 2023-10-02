@@ -45,15 +45,16 @@ while True:
 
         if event == "Clear":
                 selected_item = values["output"]
-                stack2=stack
+
+                for i in range(len(Stack)):
+                        if selected_item[1:-1] != Stack[i].val():
+                                Stack.remove(Stack[i])
+                                break
+
                 stack=[]
-                stack.append(selected_item)
-                for i in range(len(stack2)):
-                        if selected_item == stack2[i]:
-                                stack.append(stack2[i])
-                                Stack.remove[i]
                 for i in range(len(Stack)):
                         stack.append(Stack[i].val())
+
                 window["output"].update(values=stack)
                 
         if event == "Jam":
@@ -68,6 +69,12 @@ while True:
                 window[f'Main'].update(visible=True)
         
         if event == "Add":                              #Adds the input to the output screen
+                item = rep(values[0], values[1], values[2])
+                for i in range(len(Stack)-1):
+                        if Stack[i].val() == item.val():
+                                Stack[i].add(item.amount)
+
+                
                 Stack.append(rep(values[0], values[1], values[2]))
                 stack=[]
                 for i in range(len(Stack)):

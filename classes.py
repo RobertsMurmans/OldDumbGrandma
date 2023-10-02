@@ -34,12 +34,3 @@ class Jamm(Gains):
     def jamify():               #Removes abitity to jam jam.
         print("You can't jam jam!")
         return
-
-
-
-
-#Apple = Gains("Apple", 12, "fruit")
-#Apple.info()
-#AppleJ = Apple.jamify(4)
-#Apple.info()
-#AppleJ.info()
