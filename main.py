@@ -47,7 +47,8 @@ while True:
                 selected_item = values["output"]
 
                 for i in range(len(Stack)):
-                        if selected_item[1:-1] != Stack[i].val():
+                        a = [Stack[i].val()]
+                        if selected_item == a:
                                 Stack.remove(Stack[i])
                                 break
 
