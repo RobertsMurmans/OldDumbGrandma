@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 
 from  classes import Gains as rep
-from  classes import Jamm as jamm
 
 #Layout for main menu 
 layoutMain = [  [sg.Text("Log or read here:")],
@@ -16,13 +15,32 @@ layoutInput = [ [sg.Text("Log your fruit.")],
                 [sg.Button("Add"), sg.Button("Back")] ]
 
 #Layout for output section
-layoutOutput = [[sg.Listbox(values=[],key="output", size=(40,20)),
-                sg.Button("Clear"), sg.Button("Back.")]]
+layoutOutput = [[sg.Listbox(values=[], key="output", size=(40,20))],
+                [sg.Button("Jam"),sg.Slider(range = (1,256), orientation="h", key= "amount")],
+                [sg.Button("Back.")]]
 
 #Combine all the layouts into one, so it can be displayed in one window
 layout = [[sg.Column(layoutMain, key="Main"), sg.Column(layoutInput, visible=False, key="Input"), sg.Column(layoutOutput, visible=False, key="Output")]]
 
-Stack=[]
+#function that handles adding new elements to list
+def add(addingTo, addingThis):
+        for i in range(len(addingTo)):
+                if addingTo[i].aval() == addingThis.aval():
+                        addingTo[i].amount = addingThis.amount + addingTo[i].amount
+                        return addingTo
+        addingTo.append(addingThis)
+        return addingTo
+
+#function that handles jaming items in list
+def jam(fromThis, jamming, amount):
+        for i in range(len(fromThis)):
+                if jamming == [fromThis[i].val()]:
+                        jamm = fromThis[i].jamify(amount)
+                        if type(jamm) != str:
+                                add(fromThis, jamm)
+        return fromThis
+
+Stack = []
 
 window = sg.Window('Gain reporter', layout)
 while True:
@@ -42,44 +60,38 @@ while True:
                 window[f'Input'].update(visible=True)
                 window[f'Output'].update(visible=True)
                 window[f'Main'].update(visible=False)
-
-        if event == "Clear":
+     
+        if event == "Jam":                              #Creates jam of selected item
                 selected_item = values["output"]
+                amount = values["amount"]
 
-                for i in range(len(Stack)):
-                        a = [Stack[i].val()]
-                        if selected_item == a:
-                                Stack.remove(Stack[i])
-                                break
+                jam(Stack, selected_item, amount)
 
                 stack=[]
-                for i in range(len(Stack)):
-                        stack.append(Stack[i].val())
+                for i in range(len(Stack)):             #Adds sring values of all elements and adds them to an array to display
+                        if Stack[i].amount != 0:
+                                stack.append(Stack[i].val())
 
                 window["output"].update(values=stack)
-                
-        if event == "Jam":
-                selected_items = values["output"]
 
 
         if event == "Back":                             #changes window to show main menu
                 window[f'Input'].update(visible=False)
                 window[f'Main'].update(visible=True)
-        if event == "Back.":                             #changes window to show main menu
+        if event == "Back.":                            #changes window to show main menu
                 window[f'Output'].update(visible=False)
                 window[f'Main'].update(visible=True)
         
         if event == "Add":                              #Adds the input to the output screen
                 item = rep(values[0], values[1], values[2])
-                for i in range(len(Stack)-1):
-                        if Stack[i].val() == item.val():
-                                Stack[i].add(item.amount)
-
                 
-                Stack.append(rep(values[0], values[1], values[2]))
+                Stack = add(Stack, item)
+
                 stack=[]
-                for i in range(len(Stack)):
-                        stack.append(Stack[i].val())
+                for i in range(len(Stack)):             #Adds sring values of all elements and adds them to an array to display
+                        if Stack[i].amount != 0:
+                                stack.append(Stack[i].val())
+
                 window["output"].update(values=stack)
 
           
