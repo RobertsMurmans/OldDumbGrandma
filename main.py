@@ -15,7 +15,7 @@ layoutInput = [ [sg.Text("Log your fruit.")],
                 [sg.Button("Add"), sg.Button("Back")] ]
 
 #Layout for output section
-layoutOutput = [[sg.Listbox(values=[], key="output", size=(40,20))],
+layoutOutput = [[sg.Listbox(values=[], key="output", size=(100,15))],
                 [sg.Button("Jam"),sg.Slider(range = (1,256), orientation="h", key= "amount")],
                 [sg.Button("Back.")]]
 
