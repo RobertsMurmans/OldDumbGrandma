@@ -4,7 +4,7 @@ from  classes import Gains as rep
 
 #Layout for main menu 
 layoutMain = [  [sg.Text("Log or read here:")],
-                [sg.Button("Add stock"), sg.Button("View inventory"), sg.Button("All")],
+                [sg.Button("Add stock"), sg.Button("View inventory")],
                 [sg.Button("Done")]]
 
 #Layout for input section
@@ -53,11 +53,6 @@ while True:
                 window[f'Main'].update(visible=False)
 
         if event == "View inventory":                   #changes window to show output
-                window[f'Output'].update(visible=True)
-                window[f'Main'].update(visible=False)
-
-        if event == "All":                              #changes window to show all(debug)
-                window[f'Input'].update(visible=True)
                 window[f'Output'].update(visible=True)
                 window[f'Main'].update(visible=False)
      
