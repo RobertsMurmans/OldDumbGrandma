@@ -2,6 +2,8 @@ import PySimpleGUI as sg
 
 from  classes import Gains as rep
 
+savefile = open("save.dat")
+
 #Layout for main menu 
 layoutMain = [  [sg.Text("Log or read here:")],
                 [sg.Button("Add stock"), sg.Button("View inventory")],
@@ -89,6 +91,8 @@ while True:
 
                 window["output"].update(values=stack)
 
-          
-
+savefile.close()
+savefile = open("savefile", "w")          
+savefile.write(Stack)
+savefile.close()
 window.close()
